@@ -3,4 +3,4 @@
 
 # Restart Elasticsearch
 - name: Restart Elasticsearch
-  service: name=elasticsearch state=restarted
+  service: name=elasticsearch-{{ elasticsearch_node_name }} state=restarted

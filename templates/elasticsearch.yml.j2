@@ -615,3 +615,19 @@ http.cors.enabled: {{ elasticsearch_http_cors_enabled }}
 cluster.routing.allocation.awareness.attributes: zone
 node.zone: {{ facter_ec2_placement_availability_zone }}
 {% endif %}
+
+{% if elasticsearch_cluster_routing_allocation_same_shard_host is defined %}
+cluster.routing.allocation.same_shard.host: {{ elasticsearch_cluster_routing_allocation_same_shard_host }}
+{% endif %}
+
+{% if elasticsearch_cluster_routing_allocation_awareness_attributes is defined %}
+cluster.routing.allocation.awareness.attributes: {{ elasticsearch_cluster_routing_allocation_awareness_attributes }}
+{% endif %}
+{% if elasticsearch_node_hostname is defined %}
+node.hostname: {{ elasticsearch_node_hostname }}
+{% endif %}
+
+############################### Custom
+{% if elasticsearch_os_processors is defined %}
+processors: {{ elasticsearch_os_processors }}
+{% endif %}
