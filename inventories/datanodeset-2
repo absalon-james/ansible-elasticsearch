@@ -1,0 +1,79 @@
+#########################
+# Elasticsearch Cluster #
+#########################
+
+####################### Master Nodes ##########################
+# Master Nodes
+[log01.somedomain.com]
+x.x.x.1
+
+[log01.somedomain.com:vars]
+elasticsearch_node_name=log-01-master-1
+elasticsearch_network_transport_tcp_port=9300
+
+[elasticsearch-masters:children]
+log01.somedomain.com
+###############################################################
+
+####################### Client Nodes ##########################
+# Client Nodes
+
+[log02.somedomain.com]
+x.x.x.2
+[log02.somedomain.com:vars]
+elasticsearch_node_name=log-02-client-1
+elasticsearch_network_transport_tcp_port=9300
+
+[log03.somedomain.com]
+x.x.x.3
+[log03.somedomain.com:vars]
+elasticsearch_node_name=log-03-client-2
+elasticsearch_network_transport_tcp_port=9300
+
+[elasticsearch-clients:children]
+log02.somedomain.com
+log03.somedomain.com
+###############################################################
+
+####################### Data Nodes ############################
+# Data Nodes - 2 data nodes per host
+[log04.somedomain.com]
+x.x.x.4
+[log04.somedomain.com:vars]
+elasticsearch_node_name=log-04-data-5
+elasticsearch_network_transport_tcp_port=9301
+
+[log05.somedomain.com]
+x.x.x.5
+[log05-somedomain.com:vars]
+elasticsearch_node_name=log-05-data-6
+elasticsearch_network_transport_tcp_port=9301
+
+[log06.somedomain.com]
+x.x.x.6
+[log06.somedomain.com:vars]
+elasticsearch_node_name=log-06-data-7
+elasticsearch_network_transport_tcp_port=9301
+
+[log07.somedomain.com]
+x.x.x.7
+[log07.somedomain.com:vars]
+elasticsearch_node_name=log-07-data-8
+elasticsearch_network_transport_tcp_port=9301
+
+[elasticsearch-datas:children]
+log04.somedomain.com
+log05.somedomain.com
+log06.somedomain.com
+log07.somedomain.com
+###############################################################
+
+[elasticsearch:children]
+log01.somedomain.com
+log02.somedomain.com
+log03.somedomain.com
+log04.somedomain.com
+log05.somedomain.com
+log06.somedomain.com
+log07.somedomain.com
+

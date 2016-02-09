@@ -1,0 +1,49 @@
+---
+# Elasticsearch Ansible Sample Variables
+
+elasticsearch_version: 1.7.1
+
+# Dont use more than 30 GB at a time for java processes
+elasticsearch_heap_size: 30g
+elasticsearch_max_open_files: 65535
+elasticsearch_max_locked_memory: unlimited
+elasticsearch_timezone: "America/Chicago"
+elasticsearch_cluster_name: openstack
+
+elasticsearch_node_max_local_storage_nodes: 1
+
+elasticsearch_index_mapper_dynamic: "true"
+elasticsearch_memory_bootstrap_mlockall: "true"
+elasticsearch_gateway_type: local
+elasticsearch_gateway_recover_after_nodes: 1
+elasticsearch_gateway_recover_after_time: 2m
+elasticsearch_gateway_expected_nodes: 1
+
+# These should be different for each node residing on the same host. Each node should be uniquely named
+elasticsearch_data_dir: "/openstack/elasticsearch/{{ elasticsearch_node_name }}"
+elasticsearch_log_dir: "/var/log/elasticsearch/{{ elasticsearch_node_name }}"
+elasticsearch_work_dir: "/tmp/elasticsearch/{{ elasticsearch_node_name }}"
+elasticsearch_plugin_dir: "/usr/share/elasticsearch/plugins/{{ elasticsearch_node_name }}"
+
+elasticsearch_discovery_zen_minimum_master_nodes: 1
+elasticsearch_discovery_zen_ping_timeout: 30s
+
+# Disable auto discovery
+elasticsearch_discovery_zen_ping_multicast_enabled: "false"
+
+# Set Location of the masters. Data and client nodes do not need to know about non master nodes
+elasticsearch_discovery_zen_ping_unicast_hosts: "[{% for host in groups['elasticsearch-masters'] %}'{{ hostvars[host]['ansible_br_mgmt'].ipv4.address }}:{{ hostvars[host]['elasticsearch_network_transport_tcp_port'] }}'{% if not loop.last %},{% endif %}{% endfor %}]"
+
+elasticsearch_misc_auto_create_index: "true"
+elasticsearch_misc_query_bool_max_clause_count: 4096
+elasticsearch_misc_disable_delete_all_indices: "true"
+elasticsearch_java_opts: "-XX:-UseSuperWord"
+
+elasticsearch_network_publish_host: "{{ hostvars[inventory_hostname]['ansible_br_mgmt'].ipv4.address }}"
+
+elasticsearch_cluster_routing_allocation_same_shard_host: 'true'
+
+# A good place to start is one shard per node
+elasticsearch_index_number_of_shards: 8
+elasticsearch_index_number_of_replicas: 1
+elasticsearch_service_startonboot: yes

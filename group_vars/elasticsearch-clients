@@ -1,0 +1,14 @@
+---
+# Elasticsearch client node group vars
+# Set both of these to false for client nodes
+
+elasticsearch_node_master: "false"
+elasticsearch_node_data: "false"
+
+elasticsearch_plugins:
+  - name:  mobz/elasticsearch-head
+elasticsearch_http_cors_enabled: "true"
+
+# Multiple bind hosts
+elasticsearch_network_bind_host: ["localhost", "{{ hostvars[inventory_hostname]['ansible_br_mgmt'].ipv4.address }}"]
+elasticsearch_network_http_enabled: "true"

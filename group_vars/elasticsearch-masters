@@ -1,0 +1,11 @@
+---
+# Elasticsearch master node group vars
+
+# Disable http on master nodes
+elasticsearch_network_http_enabled: "false"
+elasticsearch_node_master: "true"
+elasticsearch_node_data: "false"
+
+elasticsearch_network_bind_host: "{{ hostvars[inventory_hostname]['ansible_br_mgmt'].ipv4.address }}"
+
+elasticsearch_network.publish_host: "{{ hostvars[inventory_hostname]['ansible_br_mgmt'].ipv4.address }}"

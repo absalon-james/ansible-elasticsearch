@@ -1,0 +1,20 @@
+---
+# Elasticsearch data node group vars
+# Disable http access on non clients
+elasticsearch_network_http_enabled: "false"
+
+# Set to data node by enabling data
+elasticsearch_node_data: "true"
+elasticsearch_node_master: "false"
+
+elasticsearch_network_bind_host: "{{ hostvars[inventory_hostname]['ansible_br_mgmt'].ipv4.address }}"
+
+elasticsearch_network.publish_host: "{{ hostvars[inventory_hostname]['ansible_br_mgmt'].ipv4.address }}"
+
+# Divide processors by the number of data nodes residing on the same host
+elasticsearch_os_processors: 24
+
+# This these settings to prevent a primary shard and a replica shard pair from residing on the same host even though different nodes.
+elasticsearch_cluster_routing_allocation_same_shard_host: 'true'
+elasticsearch_cluster_routing_allocation_awareness_attributes: 'hostname'
+elasticsearch_node_hostname: "{{ hostvars[inventory_hostname].ansible_hostname }}"
