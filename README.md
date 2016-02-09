@@ -8,4 +8,4 @@ The inventories and groups var presented in this branch describe an elasticsearc
 
 Don't allocate more than 30 GB ram to a single node. Doing so prevents java from using pointer compression.
 
-If stacking multiple nodes in a single host, all operating directories must be unique per node. Ideally, even the storage drives would be unique.
+If stacking multiple nodes in a single host, all operating directories must be unique per node. Ideally, even the storage drives would be unique. The playbook must be run separately for each data node set. In this example, there are two sets of 4 data nodes.
